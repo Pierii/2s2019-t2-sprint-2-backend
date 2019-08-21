@@ -6,4 +6,4 @@ CREATE TABLE Funcionarios (
 	IdFuncionario		INT PRIMARY KEY IDENTITY NOT NULL
 	,Nome				VARCHAR (255) NOT NULL
 	,Sobrenome			VARCHAR (255) NOT NULL
-)
+);
