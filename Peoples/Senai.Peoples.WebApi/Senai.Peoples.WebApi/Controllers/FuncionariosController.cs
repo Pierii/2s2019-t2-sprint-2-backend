@@ -14,11 +14,6 @@ namespace Senai.Peoples.WebApi.Controllers
     [ApiController]
     public class FuncionariosController : ControllerBase
     {
-         List<FuncionarioDomain> funcionarios = new List<FuncionarioDomain>()
-            {
-                new FuncionarioDomain { IdFuncionario= 1, Nome = "Catarina", Sobrenome = "Strada"}
-                ,new FuncionarioDomain { IdFuncionario= 2, Nome = "Tadeu", Sobrenome = "Vitelli"}
-            };
         FuncionarioRepository FuncionarioRepository = new FuncionarioRepository();
     
         [HttpPost]
@@ -43,6 +38,21 @@ namespace Senai.Peoples.WebApi.Controllers
                 return NotFound();
             }
             return Ok(Funcionario);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Atualizar(int id, FuncionarioDomain funcionario)
+        {
+            funcionario.IdFuncionario = id;
+            FuncionarioRepository.Atualizar(funcionario);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Deletar(int id)
+        {
+            FuncionarioRepository.Deletar(id);
+            return Ok();
         }
     }
 }

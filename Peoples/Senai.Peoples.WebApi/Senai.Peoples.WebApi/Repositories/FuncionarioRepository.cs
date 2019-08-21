@@ -9,12 +9,7 @@ namespace Senai.Peoples.WebApi.Repositories
 {
     public class FuncionarioRepository
     {
-         List<FuncionarioDomain> funcionarios = new List<FuncionarioDomain>()
-            {
-                new FuncionarioDomain { IdFuncionario= 1, Nome = "Catarina", Sobrenome = "Strada"}
-                ,new FuncionarioDomain { IdFuncionario= 2, Nome = "Tadeu", Sobrenome = "Vitelli"}
-            };
-
+   
         private string StringConexao =
             "Data Source=.\\SqlExpress; Initial catalog=M_Peoples; User Id=sa; Pwd=132";
 
@@ -93,5 +88,34 @@ namespace Senai.Peoples.WebApi.Repositories
             }
         }
 
+        public void Atualizar(FuncionarioDomain funcionario)
+        {
+            string Query = "UPDATE Funcionarios SET Nome = @Nome, Sobrenome = @Sobrenome WHERE IdFuncionario = @IdFuncionario";
+
+            using (SqlConnection con = new SqlConnection(StringConexao))
+            {
+                SqlCommand cmd = new SqlCommand(Query, con);
+                cmd.Parameters.AddWithValue("@Nome", funcionario.Nome);
+                cmd.Parameters.AddWithValue("@Sobrenome", funcionario.Sobrenome);
+                cmd.Parameters.AddWithValue("@IdFuncionario", funcionario.IdFuncionario);
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void Deletar(int id)
+        {
+            string Query = "DELETE FROM Funcionarios WHERE IdFuncionario = @IdFuncionario";
+
+            using (SqlConnection con = new SqlConnection(StringConexao))
+            {
+                SqlCommand cmd = new SqlCommand(Query, con);
+                cmd.Parameters.AddWithValue("@IdFuncionario", id);
+
+                con.Open();
+
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
